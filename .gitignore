@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pkl
+*.joblib
+venv/
+.env
+
+# Node
+node_modules/
+dist/
+.env.local
+
+# Data (large files)
+data/raw/
+*.csv
+
+# OS
+.DS_Store
+Thumbs.db
