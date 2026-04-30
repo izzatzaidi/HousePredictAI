@@ -48,7 +48,7 @@ export default function Predict({ setPage, setResults }) {
     padding: "12px 14px", borderRadius: 10,
     background: theme.bgInput,
     border: `1px solid ${hasError ? "#f87171" : theme.border}`,
-    color: theme.text, fontSize: 15, fontFamily: "DM Sans",
+    color: theme.text, fontSize: 15, fontFamily: "Inter",
     transition: "border-color 0.2s", width: "100%",
   });
 
@@ -70,7 +70,7 @@ export default function Predict({ setPage, setResults }) {
             background: theme.accentGlow, border: `1px solid ${theme.borderAccent}`,
             fontSize: 12, color: theme.accentLight, marginBottom: 16,
           }}>XGBoost ML Model · Trained on UK ONS Data</div>
-          <h1 style={{ fontFamily: "Syne", fontSize: 36, fontWeight: 800, marginBottom: 10 }}>
+          <h1 style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: 36, fontWeight: 800, marginBottom: 10 }}>
             Property details
           </h1>
           <p style={{ color: theme.textMuted, fontSize: 16 }}>
@@ -194,7 +194,7 @@ export default function Predict({ setPage, setResults }) {
                   onClick={() => set("condition", c)}
                   style={{
                     padding: "8px 16px", borderRadius: 8, cursor: "pointer",
-                    fontSize: 14, fontFamily: "DM Sans", transition: "all 0.15s",
+                    fontSize: 14, fontFamily: "Inter", transition: "all 0.15s",
                     background: form.condition === c ? theme.accent : theme.bgInput,
                     border: `1px solid ${form.condition === c ? theme.accent : theme.border}`,
                     color: form.condition === c ? "white" : theme.textMuted,
@@ -228,7 +228,7 @@ export default function Predict({ setPage, setResults }) {
               color: loading ? theme.textMuted : "white",
               fontSize: 16, fontWeight: 600,
               cursor: loading ? "not-allowed" : "pointer",
-              fontFamily: "DM Sans",
+              fontFamily: "Inter",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
             }}
           >

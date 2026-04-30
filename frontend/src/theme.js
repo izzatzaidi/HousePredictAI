@@ -15,9 +15,9 @@ export const theme = {
 };
 
 export const globalStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: ${theme.bg}; color: ${theme.text}; font-family: 'DM Sans', sans-serif; }
+  body { background: ${theme.bg}; color: ${theme.text}; font-family: 'Inter', sans-serif; }
   input, select { outline: none; }
   ::selection { background: ${theme.accent}; color: white; }
   ::-webkit-scrollbar { width: 6px; }

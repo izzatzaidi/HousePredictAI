@@ -23,9 +23,9 @@ export default function Nav({ page, setPage }) {
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 16,
         }}>🏠</div>
-        <span style={{ fontFamily: "Syne", fontWeight: 700, fontSize: 18 }}>
+        <span style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, fontSize: 18 }}>
           House<span style={{ color: theme.accentLight }}>Predict</span>
-          <span style={{ fontSize: 11, color: theme.textMuted, marginLeft: 6, fontFamily: "DM Sans", fontWeight: 400 }}>AI</span>
+          <span style={{ fontSize: 11, color: theme.textMuted, marginLeft: 6, fontFamily: "Inter", fontWeight: 400 }}>AI</span>
         </span>
       </div>
 
@@ -36,7 +36,7 @@ export default function Nav({ page, setPage }) {
             onClick={() => setPage(p)}
             style={{
               padding: "6px 16px", borderRadius: 20, border: "none",
-              cursor: "pointer", fontFamily: "DM Sans", fontSize: 14,
+              cursor: "pointer", fontFamily: "Inter", fontSize: 14,
               background: page === p ? theme.accent : "transparent",
               color: page === p ? "white" : theme.textMuted,
               transition: "all 0.2s",

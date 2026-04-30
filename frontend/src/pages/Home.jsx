@@ -64,7 +64,7 @@ export default function Home({ setPage }) {
         </div>
 
         <h1 className="fade-up-1" style={{
-          fontFamily: "Syne", fontSize: "clamp(2.4rem, 6vw, 4.5rem)",
+          fontFamily: "'Plus Jakarta Sans'", fontSize: "clamp(2.4rem, 6vw, 4.5rem)",
           fontWeight: 800, lineHeight: 1.1, marginBottom: 24,
         }}>
           Predict UK house prices<br />
@@ -91,7 +91,7 @@ export default function Home({ setPage }) {
               padding: "14px 32px", borderRadius: 12, border: "none",
               background: `linear-gradient(135deg, ${theme.accent}, #818cf8)`,
               color: "white", fontSize: 16, fontWeight: 600,
-              cursor: "pointer", fontFamily: "DM Sans",
+              cursor: "pointer", fontFamily: "Inter",
               boxShadow: `0 0 40px ${theme.accentGlow}`,
               transition: "transform 0.2s",
             }}
@@ -106,7 +106,7 @@ export default function Home({ setPage }) {
               padding: "14px 32px", borderRadius: 12,
               border: `1px solid ${theme.border}`,
               background: "transparent", color: theme.text,
-              fontSize: 16, cursor: "pointer", fontFamily: "DM Sans",
+              fontSize: 16, cursor: "pointer", fontFamily: "Inter",
               transition: "border-color 0.2s",
             }}
             onMouseEnter={e => e.currentTarget.style.borderColor = theme.accent}
@@ -130,7 +130,7 @@ export default function Home({ setPage }) {
             borderRight: i < stats.length - 1 ? `1px solid ${theme.border}` : "none",
           }}>
             <div style={{
-              fontFamily: "Syne", fontSize: 26, fontWeight: 800,
+              fontFamily: "'Plus Jakarta Sans'", fontSize: 26, fontWeight: 800,
               color: theme.accentLight, marginBottom: 4,
             }}>{s.value}</div>
             <div style={{ fontSize: 12, color: theme.textMuted }}>{s.label}</div>
@@ -142,7 +142,7 @@ export default function Home({ setPage }) {
       {overview?.regions && (
         <div style={{ maxWidth: 1000, margin: "0 auto 80px", padding: "0 2rem" }}>
           <h2 style={{
-            fontFamily: "Syne", fontSize: 24, fontWeight: 700,
+            fontFamily: "'Plus Jakarta Sans'", fontSize: 24, fontWeight: 700,
             textAlign: "center", marginBottom: 24,
           }}>Regional market snapshot</h2>
           <div style={{
@@ -169,7 +169,7 @@ export default function Home({ setPage }) {
                 }}
               >
                 <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 6 }}>{reg.region}</div>
-                <div style={{ fontFamily: "Syne", fontSize: 17, fontWeight: 700, color: theme.text }}>
+                <div style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: 17, fontWeight: 700, color: theme.text }}>
                   {fmt(reg.avg_price)}
                 </div>
                 <div style={{
@@ -187,7 +187,7 @@ export default function Home({ setPage }) {
       {/* Features */}
       <div style={{ maxWidth: 900, margin: "0 auto 100px", padding: "0 2rem" }}>
         <h2 style={{
-          fontFamily: "Syne", fontSize: 28, fontWeight: 700,
+          fontFamily: "'Plus Jakarta Sans'", fontSize: 28, fontWeight: 700,
           textAlign: "center", marginBottom: 40,
         }}>Why HousePredict?</h2>
         <div style={{
@@ -213,7 +213,7 @@ export default function Home({ setPage }) {
               }}
             >
               <div style={{ fontSize: 28, marginBottom: 12 }}>{f.icon}</div>
-              <div style={{ fontFamily: "Syne", fontWeight: 600, marginBottom: 8 }}>{f.title}</div>
+              <div style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 600, marginBottom: 8 }}>{f.title}</div>
               <div style={{ fontSize: 14, color: theme.textMuted, lineHeight: 1.6 }}>{f.desc}</div>
             </div>
           ))}

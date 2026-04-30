@@ -96,7 +96,7 @@ export default function Trends({ setPage }) {
             background: theme.accentGlow, border: `1px solid ${theme.borderAccent}`,
             fontSize: 12, color: theme.accentLight, marginBottom: 16,
           }}>ONS Data · 2019–2024 · 11 Regions</div>
-          <h1 style={{ fontFamily: "Syne", fontSize: 36, fontWeight: 800, marginBottom: 10 }}>
+          <h1 style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: 36, fontWeight: 800, marginBottom: 10 }}>
             UK Market Trends
           </h1>
           <p style={{ color: theme.textMuted, fontSize: 16 }}>
@@ -121,7 +121,7 @@ export default function Trends({ setPage }) {
                 background: theme.bgCard, border: `1px solid ${theme.border}`,
               }}>
                 <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 6 }}>{s.label}</div>
-                <div style={{ fontFamily: "Syne", fontSize: 22, fontWeight: 700, color: s.color }}>
+                <div style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: 22, fontWeight: 700, color: s.color }}>
                   {s.value}
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function Trends({ setPage }) {
               background: theme.bgCard, borderRadius: 16,
               border: `1px solid ${theme.border}`, padding: 24, marginBottom: 20,
             }}>
-              <div style={{ fontFamily: "Syne", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
+              <div style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
                 Regional average prices (2024)
               </div>
               <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 20 }}>
@@ -190,7 +190,7 @@ export default function Trends({ setPage }) {
               background: theme.bgCard, borderRadius: 16,
               border: `1px solid ${theme.border}`, padding: 24, marginBottom: 20,
             }}>
-              <div style={{ fontFamily: "Syne", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
+              <div style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
                 Price history by region (2019–2024)
               </div>
               <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 16 }}>
@@ -203,7 +203,7 @@ export default function Trends({ setPage }) {
                     onClick={() => toggleRegion(r)}
                     style={{
                       padding: "5px 12px", borderRadius: 20, cursor: "pointer",
-                      fontSize: 12, fontFamily: "DM Sans", transition: "all 0.15s",
+                      fontSize: 12, fontFamily: "Inter", transition: "all 0.15s",
                       background: selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] + "33" : "transparent",
                       border: `1px solid ${selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] : theme.border}`,
                       color: selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] : theme.textMuted,
@@ -246,7 +246,7 @@ export default function Trends({ setPage }) {
               background: theme.bgCard, borderRadius: 16,
               border: `1px solid ${theme.border}`, padding: 24, marginBottom: 32,
             }}>
-              <div style={{ fontFamily: "Syne", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
+              <div style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
                 Interest rates vs. price growth
               </div>
               <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 20 }}>
@@ -295,7 +295,7 @@ export default function Trends({ setPage }) {
               padding: "14px 28px", borderRadius: 12, border: "none",
               background: `linear-gradient(135deg, ${theme.accent}, #818cf8)`,
               color: "white", fontSize: 15, fontWeight: 600,
-              cursor: "pointer", fontFamily: "DM Sans",
+              cursor: "pointer", fontFamily: "Inter",
             }}
           >Get a prediction →</button>
           <button
@@ -304,7 +304,7 @@ export default function Trends({ setPage }) {
               padding: "14px 28px", borderRadius: 12,
               border: `1px solid ${theme.border}`,
               background: "transparent", color: theme.text,
-              fontSize: 15, cursor: "pointer", fontFamily: "DM Sans",
+              fontSize: 15, cursor: "pointer", fontFamily: "Inter",
             }}
           >Back to home</button>
         </div>

@@ -88,7 +88,7 @@ export default function Results({ results, setPage }) {
               display: "flex", alignItems: "center", gap: 6,
             }}
           >← Back to form</button>
-          <h1 style={{ fontFamily: "Syne", fontSize: 32, fontWeight: 800 }}>
+          <h1 style={{ fontFamily: "'Plus Jakarta Sans'", fontSize: 32, fontWeight: 800 }}>
             Prediction results
           </h1>
           <p style={{ color: theme.textMuted, marginTop: 6 }}>
@@ -115,7 +115,7 @@ export default function Results({ results, setPage }) {
             Estimated market value
           </div>
           <div style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "Inter, sans-serif",
             fontSize: "clamp(2.5rem, 7vw, 4rem)",
             fontWeight: 300, letterSpacing: "-2px", marginBottom: 12,
           }}>
@@ -161,7 +161,7 @@ export default function Results({ results, setPage }) {
             background: theme.bgCard, borderRadius: 16,
             border: `1px solid ${theme.border}`, padding: 24,
           }}>
-            <div style={{ fontFamily: "Syne", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
+            <div style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
               {r.region} price history
             </div>
             <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 16 }}>
@@ -199,7 +199,7 @@ export default function Results({ results, setPage }) {
             background: theme.bgCard, borderRadius: 16,
             border: `1px solid ${theme.border}`, padding: 24,
           }}>
-            <div style={{ fontFamily: "Syne", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
+            <div style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
               How it compares
             </div>
             <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 20 }}>
@@ -243,7 +243,7 @@ export default function Results({ results, setPage }) {
           background: theme.bgCard, borderRadius: 16,
           border: `1px solid ${theme.border}`, padding: 24, marginBottom: 20,
         }}>
-          <div style={{ fontFamily: "Syne", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
+          <div style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, marginBottom: 4, fontSize: 15 }}>
             Key price factors
           </div>
           <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 16 }}>
@@ -256,7 +256,7 @@ export default function Results({ results, setPage }) {
                 background: theme.bgInput, border: `1px solid ${theme.border}`,
               }}>
                 <div style={{ fontSize: 13, color: theme.textMuted, marginBottom: 8 }}>{f.label}</div>
-                <div style={{ fontSize: 22, fontFamily: "Syne", fontWeight: 700, color: f.color }}>
+                <div style={{ fontSize: 22, fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, color: f.color }}>
                   {f.impact}%
                 </div>
                 <div style={{ height: 3, borderRadius: 2, background: "rgba(0,0,0,0.07)", marginTop: 8 }}>
@@ -272,7 +272,7 @@ export default function Results({ results, setPage }) {
           background: theme.bgCard, borderRadius: 16,
           border: `1px solid ${theme.border}`, padding: 24, marginBottom: 20,
         }}>
-          <div style={{ fontFamily: "Syne", fontWeight: 700, marginBottom: 16, fontSize: 15 }}>
+          <div style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, marginBottom: 16, fontSize: 15 }}>
             Prediction summary
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
@@ -303,7 +303,7 @@ export default function Results({ results, setPage }) {
               padding: "14px 28px", borderRadius: 12, border: "none",
               background: `linear-gradient(135deg, ${theme.accent}, #818cf8)`,
               color: "white", fontSize: 15, fontWeight: 600,
-              cursor: "pointer", fontFamily: "DM Sans",
+              cursor: "pointer", fontFamily: "Inter",
             }}
           >Try another property</button>
           <button
@@ -312,7 +312,7 @@ export default function Results({ results, setPage }) {
               padding: "14px 28px", borderRadius: 12,
               border: `1px solid ${theme.border}`,
               background: "transparent", color: theme.text,
-              fontSize: 15, cursor: "pointer", fontFamily: "DM Sans",
+              fontSize: 15, cursor: "pointer", fontFamily: "Inter",
             }}
           >View market trends</button>
           <button
@@ -321,7 +321,7 @@ export default function Results({ results, setPage }) {
               padding: "14px 28px", borderRadius: 12,
               border: `1px solid ${theme.border}`,
               background: "transparent", color: theme.textMuted,
-              fontSize: 15, cursor: "pointer", fontFamily: "DM Sans",
+              fontSize: 15, cursor: "pointer", fontFamily: "Inter",
             }}
           >Download report</button>
         </div>
