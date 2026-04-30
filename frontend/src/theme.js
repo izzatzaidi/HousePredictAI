@@ -1,17 +1,17 @@
 export const theme = {
-  bg: "#0a0f1e",
-  bgCard: "#111827",
-  bgInput: "#1a2235",
-  accent: "#3b82f6",
-  accentLight: "#60a5fa",
-  accentGlow: "rgba(59,130,246,0.15)",
-  green: "#10b981",
-  greenGlow: "rgba(16,185,129,0.15)",
-  amber: "#f59e0b",
-  text: "#f1f5f9",
-  textMuted: "#94a3b8",
-  border: "rgba(255,255,255,0.08)",
-  borderAccent: "rgba(59,130,246,0.4)",
+  bg:           "#f0f4f8",
+  bgCard:       "#ffffff",
+  bgInput:      "#f8fafc",
+  accent:       "#2563eb",
+  accentLight:  "#3b82f6",
+  accentGlow:   "rgba(37,99,235,0.10)",
+  green:        "#059669",
+  greenGlow:    "rgba(5,150,105,0.10)",
+  amber:        "#d97706",
+  text:         "#0f172a",
+  textMuted:    "#64748b",
+  border:       "rgba(0,0,0,0.09)",
+  borderAccent: "rgba(37,99,235,0.35)",
 };
 
 export const globalStyles = `
@@ -22,7 +22,7 @@ export const globalStyles = `
   ::selection { background: ${theme.accent}; color: white; }
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: ${theme.bg}; }
-  ::-webkit-scrollbar-thumb { background: ${theme.accent}; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb { background: ${theme.accentLight}; border-radius: 3px; }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }

@@ -8,9 +8,10 @@ export default function Nav({ page, setPage }) {
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
       display: "flex", alignItems: "center", justifyContent: "space-between",
       padding: "0 2rem", height: 64,
-      background: "rgba(10,15,30,0.85)",
+      background: "rgba(255,255,255,0.92)",
       backdropFilter: "blur(12px)",
       borderBottom: `1px solid ${theme.border}`,
+      boxShadow: "0 1px 0 rgba(0,0,0,0.06)",
     }}>
       <div
         onClick={() => setPage("home")}

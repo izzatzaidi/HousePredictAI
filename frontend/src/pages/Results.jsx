@@ -98,11 +98,11 @@ export default function Results({ results, setPage }) {
 
         {/* Main price card */}
         <div className="fade-up-1" style={{
-          background: "linear-gradient(135deg, #0f1f3d, #111827)",
+          background: "linear-gradient(135deg, #eff6ff, #dbeafe)",
           border: `1px solid ${theme.borderAccent}`,
           borderRadius: 20, padding: 40, marginBottom: 20,
           position: "relative", overflow: "hidden",
-          boxShadow: `0 0 60px ${theme.accentGlow}`,
+          boxShadow: `0 4px 24px ${theme.accentGlow}`,
         }}>
           <div style={{
             position: "absolute", top: -60, right: -60,
@@ -140,7 +140,7 @@ export default function Results({ results, setPage }) {
               <span>Confidence score</span>
               <span style={{ color: theme.green, fontWeight: 600 }}>{r.confidence}%</span>
             </div>
-            <div style={{ height: 8, borderRadius: 4, background: "rgba(255,255,255,0.08)" }}>
+            <div style={{ height: 8, borderRadius: 4, background: "rgba(0,0,0,0.08)" }}>
               <div style={{
                 height: "100%", borderRadius: 4, width: `${r.confidence}%`,
                 background: `linear-gradient(90deg, ${theme.green}, ${theme.accent})`,
@@ -169,7 +169,7 @@ export default function Results({ results, setPage }) {
             </div>
             <ResponsiveContainer width="100%" height={180}>
               <BarChart data={displayChart} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
                 <XAxis
                   dataKey="year"
                   tick={{ fill: theme.textMuted, fontSize: 10 }}
@@ -224,7 +224,7 @@ export default function Results({ results, setPage }) {
                       </span>
                     </span>
                   </div>
-                  <div style={{ height: 4, borderRadius: 2, background: "rgba(255,255,255,0.06)" }}>
+                  <div style={{ height: 4, borderRadius: 2, background: "rgba(0,0,0,0.07)" }}>
                     <div style={{
                       height: "100%", borderRadius: 2,
                       width: `${Math.min(100, (c.value / r.price) * 100)}%`,
@@ -259,7 +259,7 @@ export default function Results({ results, setPage }) {
                 <div style={{ fontSize: 22, fontFamily: "Syne", fontWeight: 700, color: f.color }}>
                   {f.impact}%
                 </div>
-                <div style={{ height: 3, borderRadius: 2, background: "rgba(255,255,255,0.06)", marginTop: 8 }}>
+                <div style={{ height: 3, borderRadius: 2, background: "rgba(0,0,0,0.07)", marginTop: 8 }}>
                   <div style={{ height: "100%", borderRadius: 2, width: `${f.impact}%`, background: f.color }} />
                 </div>
               </div>

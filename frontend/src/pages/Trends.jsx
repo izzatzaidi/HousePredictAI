@@ -156,7 +156,7 @@ export default function Trends({ setPage }) {
               </div>
               <ResponsiveContainer width="100%" height={220}>
                 <BarChart data={barData} layout="vertical" margin={{ left: 90, right: 40 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" horizontal={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" horizontal={false} />
                   <XAxis
                     type="number"
                     tick={{ fill: theme.textMuted, fontSize: 10 }}
@@ -213,7 +213,7 @@ export default function Trends({ setPage }) {
               </div>
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={lineChartData} margin={{ top: 4, right: 20, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
                   <XAxis
                     dataKey="year"
                     tick={{ fill: theme.textMuted, fontSize: 11 }}
@@ -254,7 +254,7 @@ export default function Trends({ setPage }) {
               </div>
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={MARKET_INDICATORS} margin={{ top: 4, right: 20, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
                   <XAxis
                     dataKey="year"
                     tick={{ fill: theme.textMuted, fontSize: 11 }}
