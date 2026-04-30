@@ -1,5 +1,7 @@
 import { theme } from "../theme";
 
+const PAGES = ["home", "predict", "trends", "results"];
+
 export default function Nav({ page, setPage }) {
   return (
     <nav style={{
@@ -22,11 +24,12 @@ export default function Nav({ page, setPage }) {
         }}>🏠</div>
         <span style={{ fontFamily: "Syne", fontWeight: 700, fontSize: 18 }}>
           House<span style={{ color: theme.accentLight }}>Predict</span>
+          <span style={{ fontSize: 11, color: theme.textMuted, marginLeft: 6, fontFamily: "DM Sans", fontWeight: 400 }}>AI</span>
         </span>
       </div>
 
-      <div style={{ display: "flex", gap: 8 }}>
-        {["home", "predict", "results"].map(p => (
+      <div style={{ display: "flex", gap: 6 }}>
+        {PAGES.map(p => (
           <button
             key={p}
             onClick={() => setPage(p)}
@@ -38,7 +41,9 @@ export default function Nav({ page, setPage }) {
               transition: "all 0.2s",
             }}
           >
-            {p.charAt(0).toUpperCase() + p.slice(1)}
+            {p === "home"    ? "Home"    :
+             p === "predict" ? "Predict" :
+             p === "trends"  ? "Trends"  : "Results"}
           </button>
         ))}
       </div>

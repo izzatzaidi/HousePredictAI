@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { theme } from "../theme";
+import { getPrediction } from "../lib/api";
 
-const regions = [
+const REGIONS = [
   "London", "South East", "South West", "East of England",
   "East Midlands", "West Midlands", "Yorkshire", "North West",
   "North East", "Wales", "Scotland",
@@ -12,37 +13,38 @@ export default function Predict({ setPage, setResults }) {
     postcode: "", propertyType: "", bedrooms: "", bathrooms: "",
     sqft: "", condition: "", tenure: "", region: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [loading,  setLoading]  = useState(false);
+  const [errors,   setErrors]   = useState({});
+  const [apiError, setApiError] = useState("");
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   const validate = () => {
     const e = {};
-    if (!form.postcode)     e.postcode     = "Required";
-    if (!form.propertyType) e.propertyType = "Required";
-    if (!form.bedrooms)     e.bedrooms     = "Required";
-    if (!form.region)       e.region       = "Required";
+    if (!form.postcode.trim()) e.postcode     = "Required";
+    if (!form.propertyType)    e.propertyType = "Required";
+    if (!form.bedrooms)        e.bedrooms     = "Required";
+    if (!form.region)          e.region       = "Required";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validate()) return;
     setLoading(true);
-    // TODO: replace setTimeout with real fetch() call to FastAPI backend
-    setTimeout(() => {
-      setResults({
-        price: 342500, low: 318000, high: 367000, confidence: 87,
-        region: form.region, propertyType: form.propertyType,
-        bedrooms: form.bedrooms, postcode: form.postcode,
-      });
-      setLoading(false);
+    setApiError("");
+    try {
+      const result = await getPrediction(form);
+      setResults(result);
       setPage("results");
-    }, 2000);
+    } catch (err) {
+      setApiError(err.message || "Prediction failed. Is the backend running?");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const inputStyle = (hasError) => ({
+  const inputStyle = hasError => ({
     padding: "12px 14px", borderRadius: 10,
     background: theme.bgInput,
     border: `1px solid ${hasError ? "#f87171" : theme.border}`,
@@ -62,13 +64,12 @@ export default function Predict({ setPage, setResults }) {
     <div style={{ paddingTop: 64, minHeight: "100vh" }}>
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "60px 2rem" }}>
 
-        {/* Header */}
         <div className="fade-up" style={{ marginBottom: 40 }}>
           <div style={{
             display: "inline-block", padding: "5px 14px", borderRadius: 20,
             background: theme.accentGlow, border: `1px solid ${theme.borderAccent}`,
             fontSize: 12, color: theme.accentLight, marginBottom: 16,
-          }}>Step 1 of 1</div>
+          }}>XGBoost ML Model · Trained on UK ONS Data</div>
           <h1 style={{ fontFamily: "Syne", fontSize: 36, fontWeight: 800, marginBottom: 10 }}>
             Property details
           </h1>
@@ -77,7 +78,6 @@ export default function Predict({ setPage, setResults }) {
           </p>
         </div>
 
-        {/* Form card */}
         <div className="fade-up-1" style={{
           background: theme.bgCard, borderRadius: 20,
           border: `1px solid ${theme.border}`, padding: 32,
@@ -92,8 +92,8 @@ export default function Predict({ setPage, setResults }) {
                 placeholder="e.g. SW1A 1AA"
                 value={form.postcode}
                 onChange={e => set("postcode", e.target.value.toUpperCase())}
-                onFocus={e  => e.target.style.borderColor = theme.accent}
-                onBlur={e   => e.target.style.borderColor = errors.postcode ? "#f87171" : theme.border}
+                onFocus={e => e.target.style.borderColor = theme.accent}
+                onBlur={e  => e.target.style.borderColor = errors.postcode ? "#f87171" : theme.border}
               />
             </Field>
             <Field label="Region *" error={errors.region}>
@@ -101,24 +101,24 @@ export default function Predict({ setPage, setResults }) {
                 style={{ ...inputStyle(errors.region), cursor: "pointer" }}
                 value={form.region}
                 onChange={e => set("region", e.target.value)}
-                onFocus={e  => e.target.style.borderColor = theme.accent}
-                onBlur={e   => e.target.style.borderColor = errors.region ? "#f87171" : theme.border}
+                onFocus={e => e.target.style.borderColor = theme.accent}
+                onBlur={e  => e.target.style.borderColor = errors.region ? "#f87171" : theme.border}
               >
                 <option value="">Select region</option>
-                {regions.map(r => <option key={r}>{r}</option>)}
+                {REGIONS.map(r => <option key={r}>{r}</option>)}
               </select>
             </Field>
           </div>
 
-          {/* Row 2 — property type + tenure */}
+          {/* Row 2 — type + tenure */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             <Field label="Property type *" error={errors.propertyType}>
               <select
                 style={{ ...inputStyle(errors.propertyType), cursor: "pointer" }}
                 value={form.propertyType}
                 onChange={e => set("propertyType", e.target.value)}
-                onFocus={e  => e.target.style.borderColor = theme.accent}
-                onBlur={e   => e.target.style.borderColor = theme.border}
+                onFocus={e => e.target.style.borderColor = theme.accent}
+                onBlur={e  => e.target.style.borderColor = theme.border}
               >
                 <option value="">Select type</option>
                 <option>Detached</option>
@@ -133,8 +133,8 @@ export default function Predict({ setPage, setResults }) {
                 style={{ ...inputStyle(false), cursor: "pointer" }}
                 value={form.tenure}
                 onChange={e => set("tenure", e.target.value)}
-                onFocus={e  => e.target.style.borderColor = theme.accent}
-                onBlur={e   => e.target.style.borderColor = theme.border}
+                onFocus={e => e.target.style.borderColor = theme.accent}
+                onBlur={e  => e.target.style.borderColor = theme.border}
               >
                 <option value="">Select tenure</option>
                 <option>Freehold</option>
@@ -144,18 +144,18 @@ export default function Predict({ setPage, setResults }) {
             </Field>
           </div>
 
-          {/* Row 3 — bedrooms + bathrooms + sqft */}
+          {/* Row 3 — beds + baths + sqft */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
             <Field label="Bedrooms *" error={errors.bedrooms}>
               <select
                 style={{ ...inputStyle(errors.bedrooms), cursor: "pointer" }}
                 value={form.bedrooms}
                 onChange={e => set("bedrooms", e.target.value)}
-                onFocus={e  => e.target.style.borderColor = theme.accent}
-                onBlur={e   => e.target.style.borderColor = theme.border}
+                onFocus={e => e.target.style.borderColor = theme.accent}
+                onBlur={e  => e.target.style.borderColor = theme.border}
               >
                 <option value="">Beds</option>
-                {[1,2,3,4,5,"6+"].map(n => <option key={n}>{n}</option>)}
+                {[1, 2, 3, 4, 5, "6+"].map(n => <option key={n}>{n}</option>)}
               </select>
             </Field>
             <Field label="Bathrooms">
@@ -163,11 +163,11 @@ export default function Predict({ setPage, setResults }) {
                 style={{ ...inputStyle(false), cursor: "pointer" }}
                 value={form.bathrooms}
                 onChange={e => set("bathrooms", e.target.value)}
-                onFocus={e  => e.target.style.borderColor = theme.accent}
-                onBlur={e   => e.target.style.borderColor = theme.border}
+                onFocus={e => e.target.style.borderColor = theme.accent}
+                onBlur={e  => e.target.style.borderColor = theme.border}
               >
                 <option value="">Baths</option>
-                {[1,2,3,4].map(n => <option key={n}>{n}</option>)}
+                {[1, 2, 3, 4].map(n => <option key={n}>{n}</option>)}
               </select>
             </Field>
             <Field label="Floor area (sq ft)">
@@ -175,15 +175,17 @@ export default function Predict({ setPage, setResults }) {
                 style={inputStyle(false)}
                 placeholder="e.g. 850"
                 type="number"
+                min="100"
+                max="10000"
                 value={form.sqft}
                 onChange={e => set("sqft", e.target.value)}
-                onFocus={e  => e.target.style.borderColor = theme.accent}
-                onBlur={e   => e.target.style.borderColor = theme.border}
+                onFocus={e => e.target.style.borderColor = theme.accent}
+                onBlur={e  => e.target.style.borderColor = theme.border}
               />
             </Field>
           </div>
 
-          {/* Condition toggle buttons */}
+          {/* Condition */}
           <Field label="Property condition">
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {["New build", "Excellent", "Good", "Fair", "Needs work"].map(c => (
@@ -202,6 +204,18 @@ export default function Predict({ setPage, setResults }) {
             </div>
           </Field>
 
+          {/* API error */}
+          {apiError && (
+            <div style={{
+              padding: "12px 16px", borderRadius: 10,
+              background: "rgba(248,113,113,0.1)",
+              border: "1px solid rgba(248,113,113,0.3)",
+              color: "#f87171", fontSize: 14,
+            }}>
+              ⚠ {apiError}
+            </div>
+          )}
+
           {/* Submit */}
           <button
             onClick={handleSubmit}
@@ -216,7 +230,6 @@ export default function Predict({ setPage, setResults }) {
               cursor: loading ? "not-allowed" : "pointer",
               fontFamily: "DM Sans",
               display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-              transition: "opacity 0.2s",
             }}
           >
             {loading ? (
@@ -232,6 +245,17 @@ export default function Predict({ setPage, setResults }) {
             ) : "Get price prediction →"}
           </button>
         </div>
+
+        <div className="fade-up-2" style={{
+          marginTop: 20, padding: "14px 18px", borderRadius: 12,
+          background: theme.bgCard, border: `1px solid ${theme.border}`,
+          fontSize: 13, color: theme.textMuted, lineHeight: 1.6,
+        }}>
+          <strong style={{ color: theme.text }}>Better accuracy tip:</strong>
+          {" "}Providing floor area, condition, and tenure raises the ML confidence score.
+          Missing optional fields are imputed from regional averages.
+        </div>
+
       </div>
     </div>
   );

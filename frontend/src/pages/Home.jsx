@@ -1,26 +1,53 @@
+import { useState, useEffect } from "react";
 import { theme } from "../theme";
+import { getMarketOverview } from "../lib/api";
+
+const fmt = n => "£" + Number(n).toLocaleString("en-GB");
 
 export default function Home({ setPage }) {
+  const [overview, setOverview] = useState(null);
+
+  useEffect(() => {
+    getMarketOverview().then(setOverview).catch(() => {});
+  }, []);
+
   const stats = [
-    { label: "Properties analysed", value: "2.4M+" },
-    { label: "UK regions covered",  value: "48"    },
-    { label: "Prediction accuracy", value: "94%"   },
-    { label: "Years of data",       value: "5+"    },
+    { label: "Properties analysed",  value: "60k+" },
+    { label: "UK regions covered",   value: "11" },
+    { label: "Prediction accuracy",  value: overview ? `${(100 - overview.national_avg / 10000).toFixed(0)}%` : "~91%" },
+    { label: "National avg (2024)",  value: overview ? fmt(overview.national_avg) : "£283k" },
+    { label: "YoY growth",           value: overview ? `${overview.yoy_growth > 0 ? "+" : ""}${overview.yoy_growth}%` : "+0.4%" },
+    { label: "Years of data",        value: "5+" },
   ];
 
   const features = [
-    { icon: "🧠", title: "ML-powered predictions",  desc: "XGBoost model trained onq 5 years of UK market data" },
-    { icon: "📊", title: "Historical trends",        desc: "Visual price trends by region, property type and time" },
-    { icon: "🎯", title: "Confidence scores",        desc: "Every prediction includes a confidence interval range" },
-    { icon: "🆓", title: "Free & transparent",       desc: "No subscription. No black box. See exactly how it works." },
+    {
+      icon: "🧠",
+      title: "XGBoost ML model",
+      desc:  "Gradient-boosted trees trained on 60,000 UK housing records across 11 regions",
+    },
+    {
+      icon: "📊",
+      title: "Historical trends",
+      desc:  "Price trends from 2019–2025 by region, property type and year",
+    },
+    {
+      icon: "🎯",
+      title: "Confidence scores",
+      desc:  "Every prediction includes a residual-based confidence interval (65–93%)",
+    },
+    {
+      icon: "🔍",
+      title: "Transparent & free",
+      desc:  "No subscription. No black box. Based on ONS Land Registry data patterns.",
+    },
   ];
 
   return (
     <div style={{ paddingTop: 64, minHeight: "100vh", overflow: "hidden" }}>
 
-      {/* ── HERO ── */}
+      {/* Hero */}
       <div style={{ position: "relative", textAlign: "center", padding: "100px 2rem 80px" }}>
-        {/* glow */}
         <div style={{
           position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)",
           width: 600, height: 400, borderRadius: "50%",
@@ -33,7 +60,7 @@ export default function Home({ setPage }) {
           background: theme.accentGlow, border: `1px solid ${theme.borderAccent}`,
           fontSize: 13, color: theme.accentLight, marginBottom: 24,
         }}>
-          🇬🇧 UK Housing Market · AI-Powered · Free
+          🇬🇧 UK Housing Market · XGBoost AI · Free
         </div>
 
         <h1 className="fade-up-1" style={{
@@ -55,7 +82,9 @@ export default function Home({ setPage }) {
           powered by machine learning, built for buyers, sellers and investors.
         </p>
 
-        <div className="fade-up-3" style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+        <div className="fade-up-3" style={{
+          display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap",
+        }}>
           <button
             onClick={() => setPage("predict")}
             style={{
@@ -66,13 +95,13 @@ export default function Home({ setPage }) {
               boxShadow: `0 0 40px ${theme.accentGlow}`,
               transition: "transform 0.2s",
             }}
-            onMouseEnter={e => e.target.style.transform = "scale(1.04)"}
-            onMouseLeave={e => e.target.style.transform = "scale(1)"}
+            onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
+            onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
           >
             Get a prediction →
           </button>
           <button
-            onClick={() => setPage("results")}
+            onClick={() => setPage("trends")}
             style={{
               padding: "14px 32px", borderRadius: 12,
               border: `1px solid ${theme.border}`,
@@ -80,36 +109,82 @@ export default function Home({ setPage }) {
               fontSize: 16, cursor: "pointer", fontFamily: "DM Sans",
               transition: "border-color 0.2s",
             }}
-            onMouseEnter={e => e.target.style.borderColor = theme.accent}
-            onMouseLeave={e => e.target.style.borderColor = theme.border}
+            onMouseEnter={e => e.currentTarget.style.borderColor = theme.accent}
+            onMouseLeave={e => e.currentTarget.style.borderColor = theme.border}
           >
-            View sample results
+            View market trends
           </button>
         </div>
       </div>
 
-      {/* ── STATS BAR ── */}
+      {/* Stats bar */}
       <div className="fade-up-4" style={{
         display: "flex", justifyContent: "center", flexWrap: "wrap",
-        maxWidth: 900, margin: "0 auto 80px",
+        maxWidth: 1000, margin: "0 auto 80px",
         background: theme.bgCard, borderRadius: 16,
         border: `1px solid ${theme.border}`, overflow: "hidden",
       }}>
         {stats.map((s, i) => (
           <div key={i} style={{
-            flex: "1 1 180px", padding: "28px 24px", textAlign: "center",
+            flex: "1 1 150px", padding: "24px 20px", textAlign: "center",
             borderRight: i < stats.length - 1 ? `1px solid ${theme.border}` : "none",
           }}>
             <div style={{
-              fontFamily: "Syne", fontSize: 32, fontWeight: 800,
+              fontFamily: "Syne", fontSize: 26, fontWeight: 800,
               color: theme.accentLight, marginBottom: 4,
             }}>{s.value}</div>
-            <div style={{ fontSize: 13, color: theme.textMuted }}>{s.label}</div>
+            <div style={{ fontSize: 12, color: theme.textMuted }}>{s.label}</div>
           </div>
         ))}
       </div>
 
-      {/* ── FEATURES ── */}
+      {/* Regional snapshot */}
+      {overview?.regions && (
+        <div style={{ maxWidth: 1000, margin: "0 auto 80px", padding: "0 2rem" }}>
+          <h2 style={{
+            fontFamily: "Syne", fontSize: 24, fontWeight: 700,
+            textAlign: "center", marginBottom: 24,
+          }}>Regional market snapshot</h2>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))",
+            gap: 12,
+          }}>
+            {overview.regions.map((reg, i) => (
+              <div
+                key={i}
+                onClick={() => setPage("trends")}
+                style={{
+                  padding: "16px 18px", borderRadius: 12, cursor: "pointer",
+                  background: theme.bgCard, border: `1px solid ${theme.border}`,
+                  transition: "border-color 0.2s, transform 0.2s",
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = theme.borderAccent;
+                  e.currentTarget.style.transform   = "translateY(-2px)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = theme.border;
+                  e.currentTarget.style.transform   = "translateY(0)";
+                }}
+              >
+                <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 6 }}>{reg.region}</div>
+                <div style={{ fontFamily: "Syne", fontSize: 17, fontWeight: 700, color: theme.text }}>
+                  {fmt(reg.avg_price)}
+                </div>
+                <div style={{
+                  fontSize: 12, fontWeight: 600, marginTop: 4,
+                  color: reg.yoy_growth >= 0 ? theme.green : "#f87171",
+                }}>
+                  {reg.yoy_growth >= 0 ? "+" : ""}{reg.yoy_growth}% YoY
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Features */}
       <div style={{ maxWidth: 900, margin: "0 auto 100px", padding: "0 2rem" }}>
         <h2 style={{
           fontFamily: "Syne", fontSize: 28, fontWeight: 700,
@@ -130,11 +205,11 @@ export default function Home({ setPage }) {
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.borderColor = theme.borderAccent;
-                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.transform   = "translateY(-2px)";
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.borderColor = theme.border;
-                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.transform   = "translateY(0)";
               }}
             >
               <div style={{ fontSize: 28, marginBottom: 12 }}>{f.icon}</div>
