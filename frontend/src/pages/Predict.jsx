@@ -8,6 +8,22 @@ const REGIONS = [
   "North East", "Wales", "Scotland",
 ];
 
+const inputStyle = hasError => ({
+  padding: "12px 14px", borderRadius: 10,
+  background: theme.bgInput,
+  border: `1px solid ${hasError ? "#f87171" : theme.border}`,
+  color: theme.text, fontSize: 15, fontFamily: "Inter",
+  transition: "border-color 0.2s", width: "100%",
+});
+
+const Field = ({ label, error, children }) => (
+  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+    <label style={{ fontSize: 13, color: theme.textMuted, fontWeight: 500 }}>{label}</label>
+    {children}
+    {error && <span style={{ fontSize: 12, color: "#f87171" }}>{error}</span>}
+  </div>
+);
+
 export default function Predict({ setPage, setResults }) {
   const [form, setForm] = useState({
     postcode: "", propertyType: "", bedrooms: "", bathrooms: "",
@@ -43,22 +59,6 @@ export default function Predict({ setPage, setResults }) {
       setLoading(false);
     }
   };
-
-  const inputStyle = hasError => ({
-    padding: "12px 14px", borderRadius: 10,
-    background: theme.bgInput,
-    border: `1px solid ${hasError ? "#f87171" : theme.border}`,
-    color: theme.text, fontSize: 15, fontFamily: "Inter",
-    transition: "border-color 0.2s", width: "100%",
-  });
-
-  const Field = ({ label, error, children }) => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <label style={{ fontSize: 13, color: theme.textMuted, fontWeight: 500 }}>{label}</label>
-      {children}
-      {error && <span style={{ fontSize: 12, color: "#f87171" }}>{error}</span>}
-    </div>
-  );
 
   return (
     <div style={{ paddingTop: 64, minHeight: "100vh" }}>
