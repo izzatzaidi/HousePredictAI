@@ -38,9 +38,8 @@ export default function Predict({ setPage, setResults }) {
   const validate = () => {
     const e = {};
     const pc = form.postcode.trim();
-    if (!pc)                              e.postcode = "Required";
-    else if (pc.length > 8)              e.postcode = "Max 8 characters";
-    else if (!/^[A-Z0-9 ]+$/.test(pc))  e.postcode = "Letters and numbers only";
+    if (pc.length > 8)                   e.postcode = "Max 8 characters";
+    else if (pc && !/^[A-Z0-9 ]+$/.test(pc)) e.postcode = "Letters and numbers only";
     if (!form.propertyType)              e.propertyType = "Required";
     if (!form.bedrooms)                  e.bedrooms     = "Required";
     if (!form.region)                    e.region       = "Required";
@@ -89,7 +88,7 @@ export default function Predict({ setPage, setResults }) {
 
           {/* Row 1 — postcode + region */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            <Field label="Postcode *" error={errors.postcode}>
+            <Field label="Postcode (optional)" error={errors.postcode}>
               <input
                 style={inputStyle(errors.postcode)}
                 placeholder="e.g. SW1A 1AA"

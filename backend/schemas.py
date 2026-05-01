@@ -5,7 +5,7 @@ from pydantic import BaseModel, field_validator
 
 
 class PredictionRequest(BaseModel):
-    postcode:        str
+    postcode:        Optional[str] = None
     region:          str
     property_type:   str
     bedrooms:        Union[int, str]
@@ -42,5 +42,5 @@ class PredictionResponse(BaseModel):
     region:           str
     property_type:    str
     bedrooms:         int
-    postcode:         str
+    postcode:         Optional[str] = None
     mae_pct:          Optional[float] = None
