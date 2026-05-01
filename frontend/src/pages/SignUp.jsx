@@ -11,13 +11,15 @@ const inputStyle = (err) => ({
 
 export default function SignUp({ setPage }) {
   const { signUp } = useAuth();
-  const [fullName,  setFullName]  = useState("");
-  const [email,     setEmail]     = useState("");
-  const [password,  setPassword]  = useState("");
-  const [confirm,   setConfirm]   = useState("");
-  const [loading,   setLoading]   = useState(false);
-  const [error,     setError]     = useState("");
-  const [done,      setDone]      = useState(false);
+  const [fullName,     setFullName]     = useState("");
+  const [email,        setEmail]        = useState("");
+  const [password,     setPassword]     = useState("");
+  const [confirm,      setConfirm]      = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm,  setShowConfirm]  = useState(false);
+  const [loading,      setLoading]      = useState(false);
+  const [error,        setError]        = useState("");
+  const [done,         setDone]         = useState(false);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -137,23 +139,47 @@ export default function SignUp({ setPage }) {
             </div>
             <div>
               <label style={{ fontSize: 13, fontWeight: 500, color: theme.textMuted, display: "block", marginBottom: 6 }}>Password</label>
-              <input
-                type="password" placeholder="Min. 6 characters" value={password}
-                onChange={e => setPassword(e.target.value)}
-                style={inputStyle(false)}
-                onFocus={e => e.target.style.borderColor = theme.accent}
-                onBlur={e  => e.target.style.borderColor = "#e2e8f0"}
-              />
+              <div style={{ position: "relative" }}>
+                <input
+                  type={showPassword ? "text" : "password"} placeholder="••••••••" value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  style={{ ...inputStyle(false), paddingRight: 44 }}
+                  onFocus={e => e.target.style.borderColor = theme.accent}
+                  onBlur={e  => e.target.style.borderColor = "#e2e8f0"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(v => !v)}
+                  style={{
+                    position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
+                    background: "none", border: "none", cursor: "pointer",
+                    color: theme.textMuted, fontSize: 16, padding: 2, lineHeight: 1,
+                  }}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >{showPassword ? "🙈" : "👁"}</button>
+              </div>
             </div>
             <div>
               <label style={{ fontSize: 13, fontWeight: 500, color: theme.textMuted, display: "block", marginBottom: 6 }}>Confirm password</label>
-              <input
-                type="password" placeholder="••••••••" value={confirm}
-                onChange={e => setConfirm(e.target.value)}
-                style={inputStyle(password && confirm && password !== confirm)}
-                onFocus={e => e.target.style.borderColor = theme.accent}
-                onBlur={e  => e.target.style.borderColor = (password && confirm && password !== confirm) ? "#f87171" : "#e2e8f0"}
-              />
+              <div style={{ position: "relative" }}>
+                <input
+                  type={showConfirm ? "text" : "password"} placeholder="••••••••" value={confirm}
+                  onChange={e => setConfirm(e.target.value)}
+                  style={{ ...inputStyle(password && confirm && password !== confirm), paddingRight: 44 }}
+                  onFocus={e => e.target.style.borderColor = theme.accent}
+                  onBlur={e  => e.target.style.borderColor = (password && confirm && password !== confirm) ? "#f87171" : "#e2e8f0"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirm(v => !v)}
+                  style={{
+                    position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
+                    background: "none", border: "none", cursor: "pointer",
+                    color: theme.textMuted, fontSize: 16, padding: 2, lineHeight: 1,
+                  }}
+                  aria-label={showConfirm ? "Hide password" : "Show password"}
+                >{showConfirm ? "🙈" : "👁"}</button>
+              </div>
             </div>
 
             <button
