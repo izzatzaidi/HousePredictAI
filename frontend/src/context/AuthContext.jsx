@@ -4,12 +4,14 @@ import { supabase } from "../lib/supabase";
 const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
-  const [user,    setUser]    = useState(null);
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user,      setUser]      = useState(null);
+  const [profile,   setProfile]   = useState(null);
+  const [loading,   setLoading]   = useState(true);
   const [resetMode, setResetMode] = useState(false);
 
   useEffect(() => {
+    if (!supabase) { setLoading(false); return; }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) _fetchProfile(session.user.id);
@@ -28,6 +30,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function _fetchProfile(userId) {
+    if (!supabase) return;
     const { data } = await supabase
       .from("profiles")
       .select("*")
@@ -38,12 +41,14 @@ export function AuthProvider({ children }) {
   }
 
   async function signIn(email, password) {
+    if (!supabase) throw new Error("Auth not configured.");
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
     return data;
   }
 
   async function signUp(email, password, role, fullName) {
+    if (!supabase) throw new Error("Auth not configured.");
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
     if (data.user) {
@@ -58,11 +63,13 @@ export function AuthProvider({ children }) {
   }
 
   async function signOut() {
+    if (!supabase) return;
     await supabase.auth.signOut();
     setProfile(null);
   }
 
   async function resetPassword(email) {
+    if (!supabase) throw new Error("Auth not configured.");
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin,
     });
@@ -70,12 +77,14 @@ export function AuthProvider({ children }) {
   }
 
   async function updatePassword(newPassword) {
+    if (!supabase) throw new Error("Auth not configured.");
     const { error } = await supabase.auth.updateUser({ password: newPassword });
     if (error) throw error;
     setResetMode(false);
   }
 
   async function updateProfile(updates) {
+    if (!supabase) throw new Error("Auth not configured.");
     const { data, error } = await supabase
       .from("profiles")
       .update({ ...updates, updated_at: new Date().toISOString() })
