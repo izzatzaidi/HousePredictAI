@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { globalStyles } from "./theme";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import Nav            from "./components/Nav";
@@ -11,10 +11,31 @@ import Login          from "./pages/Login";
 import SignUp         from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword  from "./pages/ResetPassword";
+
+const VALID_PAGES = new Set([
+  "home", "predict", "results", "trends", "history",
+  "login", "signup", "forgot-password",
+]);
+
+function hashToPage() {
+  const hash = window.location.hash.replace("#/", "").split("?")[0] || "home";
+  return VALID_PAGES.has(hash) ? hash : "home";
+}
+
 function AppInner() {
   const { resetMode, loading } = useAuth();
-  const [page,    setPage]    = useState("home");
-  const [results, setResults] = useState(null);
+  const [page,    setPageState] = useState(hashToPage);
+  const [results, setResults]   = useState(null);
+
+  const setPage = useCallback((p) => {
+    window.location.hash = `/${p}`;
+  }, []);
+
+  useEffect(() => {
+    const onHashChange = () => setPageState(hashToPage());
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
 
   if (loading) return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -31,14 +52,14 @@ function AppInner() {
   return (
     <>
       <Nav page={page} setPage={setPage} />
-      {page === "home"           && <Home           setPage={setPage} />}
-      {page === "predict"        && <Predict        setPage={setPage} setResults={setResults} />}
-      {page === "results"        && <Results        results={results} setPage={setPage} />}
-      {page === "trends"         && <Trends         setPage={setPage} />}
-      {page === "history"        && <History        setPage={setPage} />}
-      {page === "login"          && <Login          setPage={setPage} />}
-      {page === "signup"         && <SignUp         setPage={setPage} />}
-      {page === "forgot-password"&& <ForgotPassword setPage={setPage} />}
+      {page === "home"            && <Home           setPage={setPage} />}
+      {page === "predict"         && <Predict        setPage={setPage} setResults={setResults} />}
+      {page === "results"         && <Results        results={results} setPage={setPage} />}
+      {page === "trends"          && <Trends         setPage={setPage} />}
+      {page === "history"         && <History        setPage={setPage} />}
+      {page === "login"           && <Login          setPage={setPage} />}
+      {page === "signup"          && <SignUp         setPage={setPage} />}
+      {page === "forgot-password" && <ForgotPassword setPage={setPage} />}
     </>
   );
 }
