@@ -35,14 +35,15 @@ export default function Predict({ setPage, setResults }) {
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
+  const UK_POSTCODE = /^[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}$/;
+
   const validate = () => {
     const e = {};
-    const pc = form.postcode.trim();
-    if (pc.length > 8)                   e.postcode = "Max 8 characters";
-    else if (pc && !/^[A-Z0-9 ]+$/.test(pc)) e.postcode = "Letters and numbers only";
-    if (!form.propertyType)              e.propertyType = "Required";
-    if (!form.bedrooms)                  e.bedrooms     = "Required";
-    if (!form.region)                    e.region       = "Required";
+    const pc = form.postcode.trim().toUpperCase();
+    if (pc && !UK_POSTCODE.test(pc)) e.postcode = "Enter a valid UK postcode (e.g. SW1A 1AA)";
+    if (!form.propertyType)          e.propertyType = "Required";
+    if (!form.bedrooms)              e.bedrooms     = "Required";
+    if (!form.region)                e.region       = "Required";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -94,7 +95,7 @@ export default function Predict({ setPage, setResults }) {
                 placeholder="e.g. SW1A 1AA"
                 value={form.postcode}
                 maxLength={8}
-                onChange={e => set("postcode", e.target.value.toUpperCase().replace(/[^A-Z0-9 ]/g, ""))}
+                onChange={e => set("postcode", e.target.value.toUpperCase().replace(/[^A-Z0-9 ]/g, "").slice(0, 8))}
                 onFocus={e => e.target.style.borderColor = theme.accent}
                 onBlur={e  => e.target.style.borderColor = errors.postcode ? "#f87171" : theme.border}
               />
