@@ -37,6 +37,10 @@ CREATE TABLE IF NOT EXISTS regional_prices (
 ALTER TABLE predictions    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE regional_prices ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "public_select_regional"    ON regional_prices;
+DROP POLICY IF EXISTS "public_insert_predictions" ON predictions;
+DROP POLICY IF EXISTS "public_select_predictions" ON predictions;
+
 CREATE POLICY "public_select_regional" ON regional_prices FOR SELECT USING (true);
 CREATE POLICY "public_insert_predictions" ON predictions   FOR INSERT WITH CHECK (true);
 CREATE POLICY "public_select_predictions" ON predictions   FOR SELECT USING (true);

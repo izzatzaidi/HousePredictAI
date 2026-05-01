@@ -29,8 +29,9 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
     <div style={{
-      background: theme.bgCard, border: `1px solid ${theme.border}`,
+      background: theme.bgCard, border: `1px solid rgba(0,0,0,0.12)`,
       borderRadius: 8, padding: "10px 14px", fontSize: 12,
+      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
     }}>
       <div style={{ color: theme.textMuted, marginBottom: 6 }}>{label}</div>
       {payload.map((p, i) => (
@@ -133,7 +134,7 @@ export default function Trends({ setPage }) {
           <div style={{ textAlign: "center", color: theme.textMuted, padding: 60 }}>
             <div style={{
               width: 32, height: 32, borderRadius: "50%",
-              border: `2px solid ${theme.border}`, borderTopColor: theme.accent,
+              border: `2px solid rgba(0,0,0,0.12)`, borderTopColor: theme.accent,
               animation: "spin 0.8s linear infinite",
               margin: "0 auto 16px",
             }} />
@@ -156,7 +157,7 @@ export default function Trends({ setPage }) {
               </div>
               <ResponsiveContainer width="100%" height={220}>
                 <BarChart data={barData} layout="vertical" margin={{ left: 90, right: 40 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" horizontal={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.10)" horizontal={false} />
                   <XAxis
                     type="number"
                     tick={{ fill: theme.textMuted, fontSize: 10 }}
@@ -170,14 +171,14 @@ export default function Trends({ setPage }) {
                   />
                   <Tooltip
                     formatter={v => [fmt(v), "Avg price"]}
-                    contentStyle={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 8 }}
+                    contentStyle={{ background: theme.bgCard, border: "1px solid rgba(0,0,0,0.12)", borderRadius: 8, boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
                     labelStyle={{ color: theme.textMuted }}
                   />
                   <Bar dataKey="price" radius={[0, 4, 4, 0]}>
                     {barData.map((_, i) => (
                       <Cell
                         key={i}
-                        fill={i === 0 ? theme.accent : `rgba(59,130,246,${0.6 - i * 0.04})`}
+                        fill={`rgba(37,99,235,${Math.max(0.45, 0.92 - i * 0.04)})`}
                       />
                     ))}
                   </Bar>
@@ -204,16 +205,16 @@ export default function Trends({ setPage }) {
                     style={{
                       padding: "5px 12px", borderRadius: 20, cursor: "pointer",
                       fontSize: 12, fontFamily: "Inter", transition: "all 0.15s",
-                      background: selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] + "33" : "transparent",
-                      border: `1px solid ${selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] : theme.border}`,
-                      color: selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] : theme.textMuted,
+                      background: selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] + "22" : "#f8fafc",
+                      border: `1px solid ${selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] : "rgba(0,0,0,0.18)"}`,
+                      color: selected.has(r) ? REGION_COLORS[i % REGION_COLORS.length] : theme.text,
                     }}
                   >{r}</button>
                 ))}
               </div>
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={lineChartData} margin={{ top: 4, right: 20, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.10)" />
                   <XAxis
                     dataKey="year"
                     tick={{ fill: theme.textMuted, fontSize: 11 }}
@@ -254,7 +255,7 @@ export default function Trends({ setPage }) {
               </div>
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={MARKET_INDICATORS} margin={{ top: 4, right: 20, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.10)" />
                   <XAxis
                     dataKey="year"
                     tick={{ fill: theme.textMuted, fontSize: 11 }}
@@ -267,7 +268,7 @@ export default function Trends({ setPage }) {
                   />
                   <Tooltip
                     formatter={(v, name) => [`${v}%`, name]}
-                    contentStyle={{ background: theme.bgCard, border: `1px solid ${theme.border}`, borderRadius: 8 }}
+                    contentStyle={{ background: theme.bgCard, border: "1px solid rgba(0,0,0,0.12)", borderRadius: 8, boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
                     labelStyle={{ color: theme.textMuted }}
                   />
                   <Legend
@@ -302,7 +303,7 @@ export default function Trends({ setPage }) {
             onClick={() => setPage("home")}
             style={{
               padding: "14px 28px", borderRadius: 12,
-              border: `1px solid ${theme.border}`,
+              border: "1px solid rgba(0,0,0,0.18)",
               background: "transparent", color: theme.text,
               fontSize: 15, cursor: "pointer", fontFamily: "Inter",
             }}
