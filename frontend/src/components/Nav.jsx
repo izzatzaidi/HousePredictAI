@@ -114,11 +114,9 @@ export default function Nav({ page, setPage }) {
             }}>Sign in</button>
             <button onClick={() => go("signup")} style={{
               padding: "7px 16px", borderRadius: 20, border: "none", cursor: "pointer", fontSize: 14,
-              background: page === "signup"
-                ? `linear-gradient(135deg, ${theme.accent}, #818cf8)`
-                : "rgba(37,99,235,0.08)",
-              color: page === "signup" ? "white" : theme.accent,
-              fontWeight: 600,
+              background: `linear-gradient(135deg, ${theme.accent}, #818cf8)`,
+              color: "white", fontWeight: 600,
+              boxShadow: page === "signup" ? `0 0 0 3px rgba(37,99,235,0.35)` : "none",
               transition: "all 0.2s",
             }}>Sign up</button>
           </div>
@@ -171,11 +169,9 @@ export default function Nav({ page, setPage }) {
               }}>Sign in</button>
               <button onClick={() => go("signup")} style={{
                 padding: "10px 16px", borderRadius: 10, border: "none",
-                background: page === "signup"
-                  ? `linear-gradient(135deg, ${theme.accent}, #818cf8)`
-                  : "rgba(37,99,235,0.08)",
-                color: page === "signup" ? "white" : theme.accent,
-                fontSize: 15, fontWeight: 600, cursor: "pointer", textAlign: "left",
+                background: `linear-gradient(135deg, ${theme.accent}, #818cf8)`,
+                color: "white", fontSize: 15, fontWeight: 600, cursor: "pointer", textAlign: "left",
+                boxShadow: page === "signup" ? `0 0 0 3px rgba(37,99,235,0.35)` : "none",
               }}>Sign up free</button>
             </>
           )}
