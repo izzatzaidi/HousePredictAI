@@ -5,6 +5,7 @@ import Home    from "./pages/Home";
 import Predict from "./pages/Predict";
 import Results from "./pages/Results";
 import Trends  from "./pages/Trends";
+import History from "./pages/History";
 
 export default function App() {
   const [page,    setPage]    = useState("home");
@@ -18,6 +19,7 @@ export default function App() {
       {page === "predict" && <Predict setPage={setPage} setResults={setResults} />}
       {page === "results" && <Results results={results} setPage={setPage} />}
       {page === "trends"  && <Trends  setPage={setPage} />}
+      {page === "history" && <History setPage={setPage} />}
     </>
   );
 }
