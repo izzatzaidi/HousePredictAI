@@ -34,7 +34,8 @@ export default function ForgotPassword({ setPage }) {
   return (
     <div style={{
       minHeight: "100vh", display: "flex", alignItems: "center",
-      justifyContent: "center", background: theme.bg, padding: "2rem",
+      justifyContent: "center", background: theme.bg,
+      padding: "calc(64px + 2rem) 2rem 2rem",
     }}>
       <div style={{ width: "100%", maxWidth: 420 }}>
 

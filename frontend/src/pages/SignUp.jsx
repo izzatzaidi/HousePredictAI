@@ -43,7 +43,8 @@ export default function SignUp({ setPage }) {
   if (done) return (
     <div style={{
       minHeight: "100vh", display: "flex", alignItems: "center",
-      justifyContent: "center", background: theme.bg, padding: "2rem",
+      justifyContent: "center", background: theme.bg,
+      padding: "calc(64px + 2rem) 2rem 2rem",
     }}>
       <div style={{
         background: "#fff", borderRadius: 20, border: `1px solid ${theme.border}`,
@@ -73,7 +74,8 @@ export default function SignUp({ setPage }) {
   return (
     <div style={{
       minHeight: "100vh", display: "flex", alignItems: "center",
-      justifyContent: "center", background: theme.bg, padding: "2rem",
+      justifyContent: "center", background: theme.bg,
+      padding: "calc(64px + 2rem) 2rem 2rem",
     }}>
       <div style={{ width: "100%", maxWidth: 480 }}>
 
