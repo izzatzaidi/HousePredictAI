@@ -48,3 +48,25 @@ CREATE POLICY "public_select_predictions" ON predictions   FOR SELECT USING (tru
 -- ── Indexes ───────────────────────────────────────────────────────────────────
 CREATE INDEX IF NOT EXISTS idx_regional_region_year ON regional_prices (region, year);
 CREATE INDEX IF NOT EXISTS idx_predictions_created  ON predictions     (created_at DESC);
+
+-- ── User profiles (buyer / seller) ───────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS profiles (
+    id                  UUID        PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    role                TEXT        NOT NULL CHECK (role IN ('buyer', 'seller')),
+    full_name           TEXT,
+    phone               TEXT,
+    preferred_region    TEXT,
+    property_type_pref  TEXT,
+    budget_min          INTEGER,
+    budget_max          INTEGER,
+    created_at          TIMESTAMPTZ DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "users_own_profile" ON profiles;
+CREATE POLICY "users_own_profile" ON profiles
+    FOR ALL USING (auth.uid() = id);
+
+CREATE INDEX IF NOT EXISTS idx_profiles_role ON profiles (role);
