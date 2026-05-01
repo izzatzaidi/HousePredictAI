@@ -11,8 +11,6 @@ import Login          from "./pages/Login";
 import SignUp         from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword  from "./pages/ResetPassword";
-import Profile        from "./pages/Profile";
-
 function AppInner() {
   const { resetMode, loading } = useAuth();
   const [page,    setPage]    = useState("home");
@@ -38,7 +36,6 @@ function AppInner() {
       {page === "results"        && <Results        results={results} setPage={setPage} />}
       {page === "trends"         && <Trends         setPage={setPage} />}
       {page === "history"        && <History        setPage={setPage} />}
-      {page === "profile"        && <Profile        setPage={setPage} />}
       {page === "login"          && <Login          setPage={setPage} />}
       {page === "signup"         && <SignUp         setPage={setPage} />}
       {page === "forgot-password"&& <ForgotPassword setPage={setPage} />}

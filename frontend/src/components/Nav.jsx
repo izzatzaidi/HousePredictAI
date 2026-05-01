@@ -11,12 +11,12 @@ const PAGES = [
 
 export default function Nav({ page, setPage }) {
   const { user, profile, signOut } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen,    setMenuOpen]    = useState(false);
+  const [userDropdown, setUserDropdown] = useState(false);
 
   const go = p => { setPage(p); setMenuOpen(false); };
 
-  const roleColor = profile?.role === "seller" ? theme.green : theme.accent;
-  const initials  = profile?.full_name
+  const initials = profile?.full_name
     ? profile.full_name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2)
     : user?.email?.[0]?.toUpperCase() || "?";
 
@@ -58,13 +58,39 @@ export default function Nav({ page, setPage }) {
         <div style={{ width: 1, height: 24, background: theme.border, margin: "0 8px" }} />
 
         {user ? (
-          <button onClick={() => go("profile")} title="My profile" style={{
-            width: 36, height: 36, borderRadius: "50%", border: "none", cursor: "pointer",
-            background: `linear-gradient(135deg, ${roleColor}, ${roleColor}88)`,
-            color: "white", fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, fontSize: 13,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: page === "profile" ? `0 0 0 2px ${roleColor}` : "none",
-          }}>{initials}</button>
+          <div style={{ position: "relative" }}>
+            <button
+              onClick={() => setUserDropdown(o => !o)}
+              title={profile?.full_name || user.email}
+              style={{
+                width: 36, height: 36, borderRadius: "50%", border: "none", cursor: "pointer",
+                background: `linear-gradient(135deg, ${theme.accent}, #818cf8)`,
+                color: "white", fontFamily: "'Plus Jakarta Sans'", fontWeight: 700, fontSize: 13,
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
+            >{initials}</button>
+            {userDropdown && (
+              <div style={{
+                position: "absolute", right: 0, top: 44, minWidth: 180,
+                background: "#fff", border: `1px solid ${theme.border}`,
+                borderRadius: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                padding: "8px 0", zIndex: 200,
+              }}>
+                <div style={{ padding: "8px 16px 10px", borderBottom: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: theme.text }}>{profile?.full_name || "Account"}</div>
+                  <div style={{ fontSize: 12, color: theme.textMuted, marginTop: 2 }}>{user.email}</div>
+                </div>
+                <button
+                  onClick={async () => { setUserDropdown(false); await signOut(); go("home"); }}
+                  style={{
+                    width: "100%", padding: "10px 16px", border: "none", background: "none",
+                    textAlign: "left", cursor: "pointer", fontSize: 14, color: "#ef4444",
+                    fontFamily: "Inter",
+                  }}
+                >Sign out</button>
+              </div>
+            )}
+          </div>
         ) : (
           <div style={{ display: "flex", gap: 6 }}>
             <button onClick={() => go("login")} style={{
@@ -106,12 +132,9 @@ export default function Nav({ page, setPage }) {
           <div style={{ height: 1, background: theme.border, margin: "4px 0" }} />
           {user ? (
             <>
-              <button onClick={() => go("profile")} style={{
-                padding: "10px 16px", borderRadius: 10, border: "none",
-                cursor: "pointer", fontFamily: "Inter", fontSize: 15, textAlign: "left",
-                background: page === "profile" ? roleColor : "#f1f5f9",
-                color: page === "profile" ? "white" : theme.text,
-              }}>My profile</button>
+              <div style={{ padding: "8px 16px", fontSize: 13, color: theme.textMuted }}>
+                {profile?.full_name || user.email}
+              </div>
               <button onClick={async () => { await signOut(); go("home"); }} style={{
                 padding: "10px 16px", borderRadius: 10, border: "none",
                 cursor: "pointer", fontFamily: "Inter", fontSize: 15, textAlign: "left",
