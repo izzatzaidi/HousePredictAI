@@ -21,11 +21,11 @@ MODEL_DIR = Path(__file__).parent
 DATA_PATH = Path(__file__).parent.parent / "data" / "uk_housing_data.csv"
 
 FEATURE_COLS = [
-    "region", "property_type", "bedrooms", "bathrooms",
+    "postcode_district", "region", "property_type", "bedrooms", "bathrooms",
     "floor_area_sqft", "condition", "tenure", "year",
 ]
 TARGET_COL   = "price"
-CAT_FEATURES = ["region", "property_type", "condition", "tenure"]
+CAT_FEATURES = ["postcode_district", "region", "property_type", "condition", "tenure"]
 NUM_FEATURES = ["bedrooms", "bathrooms", "floor_area_sqft", "year"]
 
 

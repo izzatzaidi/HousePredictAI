@@ -58,15 +58,24 @@ def predict(
     condition_used       = _impute(condition,        "Good")
     tenure_used          = _impute(tenure,           "Freehold")
 
+    # Extract postcode district (e.g. "SW1A" from "SW1A 1AA")
+    import re
+    postcode_district = None
+    if postcode:
+        m = re.match(r'^([A-Z]{1,2}[0-9][0-9A-Z]?)', postcode.strip().upper())
+        if m:
+            postcode_district = m.group(1)
+
     X = pd.DataFrame([{
-        "region":          region,
-        "property_type":   property_type,
-        "bedrooms":        bedrooms,
-        "bathrooms":       int(bathrooms_used),
-        "floor_area_sqft": int(floor_area_sqft_used),
-        "condition":       condition_used,
-        "tenure":          tenure_used,
-        "year":            2025,
+        "postcode_district": postcode_district,
+        "region":            region,
+        "property_type":     property_type,
+        "bedrooms":          bedrooms,
+        "bathrooms":         int(bathrooms_used),
+        "floor_area_sqft":   int(floor_area_sqft_used),
+        "condition":         condition_used,
+        "tenure":            tenure_used,
+        "year":              2025,
     }])
 
     raw             = float(_pipeline.predict(X)[0])
