@@ -96,16 +96,7 @@ export default function Login({ setPage }) {
             </div>
 
             <div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                <label style={{ fontSize: 13, fontWeight: 500, color: theme.textMuted }}>Password</label>
-                <button
-                  type="button"
-                  onClick={() => setPage("forgot-password")}
-                  style={{ background: "none", border: "none", color: theme.accent, fontSize: 13, cursor: "pointer", padding: 0 }}
-                >
-                  Forgot password?
-                </button>
-              </div>
+              <label style={{ fontSize: 13, fontWeight: 500, color: theme.textMuted, display: "block", marginBottom: 6 }}>Password</label>
               <div style={{ position: "relative" }}>
                 <input
                   type={showPassword ? "text" : "password"}
@@ -139,6 +130,13 @@ export default function Login({ setPage }) {
                     </svg>
                   )}
                 </button>
+              </div>
+              <div style={{ textAlign: "right", marginTop: 6 }}>
+                <button
+                  type="button"
+                  onClick={() => setPage("forgot-password")}
+                  style={{ background: "none", border: "none", color: theme.accent, fontSize: 13, cursor: "pointer", padding: 0 }}
+                >Forgot password?</button>
               </div>
             </div>
 
