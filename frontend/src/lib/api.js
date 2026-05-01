@@ -1,4 +1,4 @@
-const BASE_URL = (import.meta.env.VITE_API_URL || "https://housepredictai-production.up.railway.app").replace(/\/$/, "");
+const BASE_URL = "https://housepredictai-production.up.railway.app";
 
 async function request(path, options = {}) {
   const res = await fetch(`${BASE_URL}${path}`, options);
