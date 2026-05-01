@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { theme } from "../theme";
 import { getPredictionsHistory } from "../lib/api";
+import { useAuth } from "../context/AuthContext";
 
 const fmt = n => "£" + Number(n).toLocaleString("en-GB");
 const fmtDate = iso => {
@@ -13,16 +14,58 @@ const confidence_color = score =>
   score >= 75 ? theme.amber : "#94a3b8";
 
 export default function History({ setPage }) {
+  const { user } = useAuth();
   const [predictions, setPredictions] = useState([]);
   const [loading, setLoading]         = useState(true);
   const [error, setError]             = useState(null);
 
   useEffect(() => {
+    if (!user) { setLoading(false); return; }
     getPredictionsHistory(20)
       .then(data => setPredictions(data.predictions || []))
       .catch(() => setError("Could not load prediction history."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [user]);
+
+  if (!user) return (
+    <div style={{
+      minHeight: "100vh", display: "flex", alignItems: "center",
+      justifyContent: "center", background: theme.bg, padding: "2rem",
+    }}>
+      <div style={{
+        background: "#fff", borderRadius: 20, border: `1px solid ${theme.border}`,
+        padding: "48px 32px", maxWidth: 420, width: "100%", textAlign: "center",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+      }}>
+        <div style={{ fontSize: 40, marginBottom: 16 }}>🔒</div>
+        <h2 style={{ fontFamily: "'Plus Jakarta Sans'", fontWeight: 800, fontSize: 22, marginBottom: 10 }}>
+          Sign in to view history
+        </h2>
+        <p style={{ color: theme.textMuted, fontSize: 14, marginBottom: 28, lineHeight: 1.6 }}>
+          Your prediction history is saved to your account. Sign in to access it.
+        </p>
+        <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
+          <button
+            onClick={() => setPage("login")}
+            style={{
+              padding: "12px 24px", borderRadius: 12, border: "none",
+              background: `linear-gradient(135deg, ${theme.accent}, #818cf8)`,
+              color: "white", fontSize: 14, fontWeight: 600, cursor: "pointer",
+            }}
+          >Sign in</button>
+          <button
+            onClick={() => setPage("signup")}
+            style={{
+              padding: "12px 24px", borderRadius: 12,
+              border: `1px solid ${theme.border}`,
+              background: "transparent", color: theme.text,
+              fontSize: 14, cursor: "pointer",
+            }}
+          >Create account</button>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div style={{ paddingTop: 64, minHeight: "100vh" }}>

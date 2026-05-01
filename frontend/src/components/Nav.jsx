@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { theme } from "../theme";
 import { useAuth } from "../context/AuthContext";
 
@@ -11,10 +11,21 @@ const PAGES = [
 
 export default function Nav({ page, setPage }) {
   const { user, profile, signOut } = useAuth();
-  const [menuOpen,    setMenuOpen]    = useState(false);
+  const [menuOpen,     setMenuOpen]     = useState(false);
   const [userDropdown, setUserDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const go = p => { setPage(p); setMenuOpen(false); };
+  const go = p => { setPage(p); setMenuOpen(false); setUserDropdown(false); };
+
+  useEffect(() => {
+    if (!userDropdown) return;
+    const handleClick = e => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target))
+        setUserDropdown(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [userDropdown]);
 
   const initials = profile?.full_name
     ? profile.full_name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2)
@@ -58,7 +69,7 @@ export default function Nav({ page, setPage }) {
         <div style={{ width: 1, height: 24, background: theme.border, margin: "0 8px" }} />
 
         {user ? (
-          <div style={{ position: "relative" }}>
+          <div ref={dropdownRef} style={{ position: "relative" }}>
             <button
               onClick={() => setUserDropdown(o => !o)}
               title={profile?.full_name || user.email}

@@ -5,7 +5,7 @@ Falls back to static data when SUPABASE_URL / SUPABASE_KEY are not set.
 from __future__ import annotations
 
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 try:
@@ -70,7 +70,7 @@ async def save_prediction(request_data: dict, result: dict) -> None:
         return
     try:
         record = {
-            "postcode":         request_data.get("postcode", ""),
+            "postcode":         request_data.get("postcode") or None,
             "region":           request_data.get("region", ""),
             "property_type":    request_data.get("property_type", ""),
             "bedrooms":         request_data.get("bedrooms"),
@@ -82,7 +82,7 @@ async def save_prediction(request_data: dict, result: dict) -> None:
             "price_low":        result["price_low"],
             "price_high":       result["price_high"],
             "confidence_score": result["confidence_score"],
-            "created_at":       datetime.utcnow().isoformat(),
+            "created_at":       datetime.now(timezone.utc).isoformat(),
         }
         client.table("predictions").insert(record).execute()
     except Exception as exc:
